@@ -1,0 +1,57 @@
+﻿<Window x:Class="Bunny_GUI_1.Oaplikaci"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bunny_GUI_1"
+        mc:Ignorable="d"
+        Name="oknoOaplikaci" Title="O aplikaci" Height="350" Width="230"  
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="Ikonky/aha.ico" >
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="LightBlue" Offset="0"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Name="Logo"  HorizontalAlignment="Left" Height="80" Width="80" Margin="0,0,0,0" 
+               Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Source="Ikonky/bunnysedy.ico"/>
+        <StackPanel Grid.Column="2" HorizontalAlignment="Center" Height="80" 
+                      VerticalAlignment="Center" >
+            <Label Content="Bunny War" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left"  />
+            <Label Content="verze 1.0" HorizontalAlignment="Center"/>
+        </StackPanel>
+        <TextBlock Text="Aplikace deskové hry Bunny War" Grid.Row="2" Grid.ColumnSpan="3" FontWeight="SemiBold" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" />
+        <TextBlock Text="Naprogramoval: David Jaroš" Grid.Row="3" Grid.ColumnSpan="3"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
+        <TextBlock Text="Kontakt: david.jaros.1234@gmail.com" Grid.Row="4" Grid.ColumnSpan="3"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
+        <TextBlock Text="(c) 2016, Jeseník (Olomoucký kraj)" Grid.Row="5" Grid.ColumnSpan="3"
+                    HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
+        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3">
+            <TextBlock Margin="5,0,0,0" Text="Používání, šíření a archivace tohoto programu je dovoleno pouze k aka- demickým a nekomerčním účelům." TextWrapping="Wrap"/>
+        </StackPanel>
+        <Button Content="Ok" Name="OkButton" Width="80" Height="25" Grid.Row="9" Grid.Column="1" 
+                HorizontalAlignment="Right" Margin="0,0,10,0"
+                IsDefault="True" Click="OkButton_Click" IsCancel="True"/>
+        <Rectangle Grid.Row="1" Width="215" Height="1" Stroke="Gray" Grid.ColumnSpan="2" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center" />
+    </Grid>
+</Window>

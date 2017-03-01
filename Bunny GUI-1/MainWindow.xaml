@@ -1,0 +1,516 @@
+﻿<Window x:Name="hlavniOkno" x:Class="Bunny_GUI_1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bunny_GUI_1"
+        mc:Ignorable="d"
+        Title="Bunny War" Height="597" Width="685" WindowStartupLocation="CenterScreen" Icon="Ikonky/bunnysedy.ico" 
+        ResizeMode="CanMinimize" Background="White" 
+        Closing="hlavniOkno_Closing" KeyDown="hlavniOkno_KeyDown" >
+    <Grid Name="superHlavniMriz" Height="565" Width="675" VerticalAlignment="Top" HorizontalAlignment="Left">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>            
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>        
+        <!--Toto je moje hlavní menu neboli Panel nabidek - MENU BAR-->
+        <Menu x:Name="hlavniMenuNahore" Grid.ColumnSpan="3" Grid.Row="0" HorizontalAlignment="Stretch"
+              VerticalAlignment="Top" Height="25" Background="#FFF0F0F0" >
+            <MenuItem x:Name="menuSoubor" Header="_Soubor" Width="58" Height="25">
+                <MenuItem x:Name="menuNovaHra" Header="_Nová hra" Click="tlacitkoNovaHra_Click"
+                          InputGestureText="Ctrl+N" ToolTip="Začít novou hru" >
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/novaHra.ico" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="menuNacistHru" Header="_Otevřít hru" Click="tlacitkoOtevrit_Click" 
+                          InputGestureText="Ctrl+O" ToolTip="Otevřít uloženou hru">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/open-file-icon.png" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="menuUlozitHru" Header="_Uložit hru" Click="tlacitkoUlozit_Click" 
+                          InputGestureText="Ctrl+S" ToolTip="Uložit stav hry do souboru">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/save-icon32.png" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="menuUlozitHruJako" Header="Uložit hru _jako ..." Click="tlacitkoUlozitJako_Click" 
+                          InputGestureText="F12" ToolTip="Uložit stav hry pod jiným názvem">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/Save-as-icon32.png" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem x:Name="menuUkoncitPogram" Header="U_končit program" Click="menuUkoncitPogram_Click" 
+                          InputGestureText="ALT+F4" ToolTip="Ukončit aplikaci">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/ukoncitProgram.ico" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>   
+            <MenuItem x:Name="menuNastaveni" Header="_Upravit" Width="60" Height="25">
+                <MenuItem x:Name="menuTahZpet" Header="Tah _zpět" Click="tlacitkoUndo_Click" 
+                          InputGestureText="CTRL+U" ToolTip="Provést tah zpět">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/undo.ico" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="tahVpred" Header="Tah _vpřed" Click="tlacitkoRedo_Click" 
+                          InputGestureText="CTRL+R" ToolTip="Provést tah vpřed">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/redo.ico" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem x:Name="menuPlay" Header="P_okračovat (výpočet tahu)" Click="tlacitkoHraj_Click" 
+                          InputGestureText="CTR+P" ToolTip="Pokračování ve výpočtu tahů">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/play.ico" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="menuPauza" Header="_Pauza (výpočet tahu)" Click="tlacitkoPause_Click" 
+                          InputGestureText="Space" ToolTip="Pozastavit výpočet tahů">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/pause.ico" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="menuUkoncitPartii" Header="_Ukončit partii" 
+                          InputGestureText="Ctrl+K" ToolTip="Ukonči rozehranou partii hry" >
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/stop.ico" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="menuNastroje" Header="Nás_troje" Width="65" Height="25">
+                <MenuItem x:Name="menuNastavitHrace" Header="_Nastavení hráčů" Click="tlacitkoNastaveni_Click" 
+                          InputGestureText="Ctrl+H" ToolTip="Změní parametry hry">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/zmenabarev.ico" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="menuProhoditStrany" Header="_Prohození stran" Click="menuProhoditStrany_Click"
+                          InputGestureText="Ctrl+W" ToolTip="Prohození stran na desce">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/vymenastran.ico" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="menuNapoveda" Header="Nápově_da" Width="70" Height="25">
+                <MenuItem x:Name="menuNejTah" Header="Nápověda ne_jlepšího tahu" Click="tlacitkoNejlepsiTah_Click" 
+                          InputGestureText="Ctrl+B" ToolTip="Nápověda pro lidského hráče">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/bulb.ico" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="menuHelp" Header="Ná_pověda" Click="menuHelp_Click" ToolTip="Ovládání a pravidla hry" 
+                          InputGestureText="F1">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/openbook.ico" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem x:Name="menuOApp" Header="_O aplikaci" Click="menuOApp_Click" ToolTip="Informace o aplikaci">
+                    <MenuItem.Icon>
+                        <Image Source="Ikonky/aha.ico" Height="16" Width="16" Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>     
+        <!-- Vsem detem mrize MrizHlavni davam obnovu metodou Refresh() kdyz vykresluji desku apod. -->
+        <!-- je to metoda ze tridy ExtensionMethods -->
+        <Grid x:Name="MrizHlavni" Height="540" Width="675" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="420"/>
+                <ColumnDefinition Width="235"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>                
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="420"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition  Height="25"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <Rectangle Name="obrysHraciPlochy" Grid.Column="1" Grid.Row="1"  Height="402" Width="402" 
+              VerticalAlignment="Center" HorizontalAlignment="Center" Stroke="Gray"/>
+            <Rectangle Name="deliciLinka" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"  Width ="675" Height="1" 
+              VerticalAlignment="Center" HorizontalAlignment="Center" Stroke="Gray">
+            </Rectangle>
+            
+            <!-- hraci desku jsem si vyrobil jako mrizku 64x 50x50 DIP-->
+            <!-- do mrizky jsem umistil 64x muj UzivatelskyPrvekPolicko-->
+            <Grid x:Name="MrizHraciPlocha" Grid.Column="1" Grid.Row="1"  Height="400" Width="400" 
+              VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <!--Sloupec A-->
+                <local:UzivPrvekPolicko x:Name="A1" Grid.Column="0" Grid.Row="7" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="A2" Grid.Column="0" Grid.Row="6" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="A3" Grid.Column="0" Grid.Row="5" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="A4" Grid.Column="0" Grid.Row="4" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="A5" Grid.Column="0" Grid.Row="3" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="A6" Grid.Column="0" Grid.Row="2" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="A7" Grid.Column="0" Grid.Row="1" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="A8" Grid.Column="0" Grid.Row="0" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <!--Sloupec B-->
+                <local:UzivPrvekPolicko x:Name="B1" Grid.Column="1" Grid.Row="7" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="B2" Grid.Column="1" Grid.Row="6" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="B3" Grid.Column="1" Grid.Row="5" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="B4" Grid.Column="1" Grid.Row="4" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="B5" Grid.Column="1" Grid.Row="3" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="B6" Grid.Column="1" Grid.Row="2" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="B7" Grid.Column="1" Grid.Row="1" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="B8" Grid.Column="1" Grid.Row="0" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <!--Sloupec C-->
+                <local:UzivPrvekPolicko x:Name="C1" Grid.Column="2" Grid.Row="7" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="C2" Grid.Column="2" Grid.Row="6" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="C3" Grid.Column="2" Grid.Row="5" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="C4" Grid.Column="2" Grid.Row="4" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="C5" Grid.Column="2" Grid.Row="3" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="C6" Grid.Column="2" Grid.Row="2" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="C7" Grid.Column="2" Grid.Row="1" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="C8" Grid.Column="2" Grid.Row="0" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <!--Sloupec D-->
+                <local:UzivPrvekPolicko x:Name="D1" Grid.Column="3" Grid.Row="7" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="D2" Grid.Column="3" Grid.Row="6" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="D3" Grid.Column="3" Grid.Row="5" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="D4" Grid.Column="3" Grid.Row="4" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="D5" Grid.Column="3" Grid.Row="3" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="D6" Grid.Column="3" Grid.Row="2" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="D7" Grid.Column="3" Grid.Row="1" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="D8" Grid.Column="3" Grid.Row="0" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <!--Sloupec E-->
+                <local:UzivPrvekPolicko x:Name="E1" Grid.Column="4" Grid.Row="7" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="E2" Grid.Column="4" Grid.Row="6" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="E3" Grid.Column="4" Grid.Row="5" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="E4" Grid.Column="4" Grid.Row="4" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="E5" Grid.Column="4" Grid.Row="3" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="E6" Grid.Column="4" Grid.Row="2" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="E7" Grid.Column="4" Grid.Row="1" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="E8" Grid.Column="4" Grid.Row="0" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <!--Sloupec F-->
+                <local:UzivPrvekPolicko x:Name="F1" Grid.Column="5" Grid.Row="7" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="F2" Grid.Column="5" Grid.Row="6" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="F3" Grid.Column="5" Grid.Row="5" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="F4" Grid.Column="5" Grid.Row="4" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="F5" Grid.Column="5" Grid.Row="3" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="F6" Grid.Column="5" Grid.Row="2" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="F7" Grid.Column="5" Grid.Row="1" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="F8" Grid.Column="5" Grid.Row="0" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <!--Sloupec G-->
+                <local:UzivPrvekPolicko x:Name="G1" Grid.Column="6" Grid.Row="7" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="G2" Grid.Column="6" Grid.Row="6" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="G3" Grid.Column="6" Grid.Row="5" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="G4" Grid.Column="6" Grid.Row="4" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="G5" Grid.Column="6" Grid.Row="3" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="G6" Grid.Column="6" Grid.Row="2" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="G7" Grid.Column="6" Grid.Row="1" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="G8" Grid.Column="6" Grid.Row="0" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <!--Sloupec H-->
+                <local:UzivPrvekPolicko x:Name="H1" Grid.Column="7" Grid.Row="7" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="H2" Grid.Column="7" Grid.Row="6" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="H3" Grid.Column="7" Grid.Row="5" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="H4" Grid.Column="7" Grid.Row="4" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="H5" Grid.Column="7" Grid.Row="3" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="H6" Grid.Column="7" Grid.Row="2" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="H7" Grid.Column="7" Grid.Row="1" Background="WhiteSmoke" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+                <local:UzivPrvekPolicko x:Name="H8" Grid.Column="7" Grid.Row="0" Background="Gray" MouseLeftButtonDown="VsechnaPolicka_MouseLeftButtonDown" MouseRightButtonDown="VsechnaPolicka_MouseRightButtonDown" MouseEnter="VsechnaPolicka_MouseEnter" MouseLeave="VsechnaPolicka_MouseLeave"/>
+            </Grid>
+            
+            <!-- Popisky jsem dal take do mrizek, vlevo a dole -->
+            <Grid x:Name="MrizOsaY" Grid.Row="1" Grid.Column="0" Height="400" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="8" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+                <TextBlock Text="7" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+                <TextBlock Text="6" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+                <TextBlock Text="5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+                <TextBlock Text="4" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+                <TextBlock Text="3" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+                <TextBlock Text="2" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+                <TextBlock Text="1" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+            </Grid>
+            <Grid x:Name="MrizOsaX" Grid.Column="1" Grid.Row="2" Width="400">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="A" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Text="B" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Text="C" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Text="D" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Text="E" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Text="F" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Text="G" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Text="H" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+            </Grid>
+            <Grid Name="MrizPravePanely"  Grid.Column="2" Grid.Row="1" Height="420" Width="235" Margin="0"  VerticalAlignment="Center" HorizontalAlignment="Left" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="110"/>
+                    <RowDefinition Height="110"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <!-- nasleduji me 3 Group Boxy -->
+                <GroupBox x:Name="hrac1GroupBox" Width="225" Height="110"  Header="Hráč 1" HorizontalAlignment="Left" Grid.Row="0" 
+            	VerticalAlignment="Center" BorderBrush="LightGray" Margin="0,0,0,0" FontWeight="Bold">
+                    <Grid Height="90" Width="215" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="85"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="jmeno1TextBlock" Grid.Column="0" Grid.Row="0" Text="Jméno:" FontWeight="Normal"/>
+                        <TextBlock Text="Barva kamenů:" Grid.Column="0" Grid.Row="1" FontWeight="Normal"/>
+                        <TextBlock Text="Typ hráče:" Grid.Column="0" Grid.Row="2"  FontWeight="Normal"/>
+                        <TextBlock Text="Obtížnost:" Grid.Column="0" Grid.Row="3"  FontWeight="Normal"/>
+                        <TextBlock Text="Zbývá kamenů:" Grid.Column="0" Grid.Row="4" FontWeight="Normal"/>
+                        <TextBlock Name="jmenoH1"  Grid.Column="1" Grid.Row="0"  FontWeight="DemiBold"
+                               Text="{Binding NastavText}"/>
+                        <TextBlock Name="barvaKamenuH1" Text="bílá" Grid.Column="1" Grid.Row="1" FontWeight="DemiBold"/>
+                        <TextBlock Name="typHrace1" Grid.Column="1" Grid.Row="2"  FontWeight="DemiBold" 
+                               Text="{Binding NastavText}">
+                        </TextBlock>
+                        <TextBlock Name="obtiznost1" Grid.Column="1" Grid.Row="3"  FontWeight="DemiBold"
+                               Text="{Binding NastavText}"/>
+                        <TextBlock Name="zbyvaKamenuH1" Text="16" Grid.Column="1" Grid.Row="4" FontWeight="DemiBold"/>
+                        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" VerticalAlignment="Bottom">
+                            <Image Name="hrac1FigurkaXAML" Source="Ikonky/Pawn-whitePNG-Clear.png" Height="93" Width="40"/>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="hrac2GroupBox" Width="225" Height="110"  Header="Hráč 2" HorizontalAlignment="Left" Grid.Row="1" 
+            	VerticalAlignment="Center" BorderBrush="LightGray" Margin="0,0,0,0" FontWeight="Bold">
+
+                    <Grid Height="90" Width="215" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="85"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock x:Name="jmeno2TextBlock" Grid.Column="0" Grid.Row="0" Text="Jméno:" FontWeight="Normal"/>
+                        <TextBlock Text="Barva kamenů:" Grid.Column="0" Grid.Row="1" FontWeight="Normal"/>
+                        <TextBlock Text="Typ hráče:" Grid.Column="0" Grid.Row="2"  FontWeight="Normal"/>
+                        <TextBlock Text="Obtížnost:" Grid.Column="0" Grid.Row="3"  FontWeight="Normal"/>
+                        <TextBlock Text="Zbývá kamenů:" Grid.Column="0" Grid.Row="4" FontWeight="Normal"/>
+                        <TextBlock Name="jmenoH2" Grid.Column="1" Grid.Row="0" FontWeight="DemiBold"
+                               Text="{Binding NastavText}"/>
+                        <TextBlock Name="barvaKamenuH2" Text="černá" Grid.Column="1" Grid.Row="1" FontWeight="DemiBold"/>
+                        <TextBlock Name="typHrace2"  Grid.Column="1" Grid.Row="2"  FontWeight="DemiBold"
+                               Text="{Binding NastavText}"/>
+                        <TextBlock Name="obtiznost2" Grid.Column="1" Grid.Row="3"  FontWeight="DemiBold"
+                               Text="{Binding NastavText}"/>
+                        <TextBlock Name="zbyvaKamenuH2" Text="16" Grid.Column="1" Grid.Row="4" FontWeight="DemiBold"/>
+                        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" VerticalAlignment="Bottom">
+                            <Image Name="hrac2FigurkaXAML"  Source="Ikonky/Pawn-blackPNG-Clear.png" Height="93" Width="40"/>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="historieTahuGroupBox" Width="225" Height="193"  Header="Historie tahů" 
+                      Grid.Row="2"  HorizontalAlignment="Left"
+                      VerticalAlignment="Top"  BorderBrush="LightGray" FontWeight="Bold" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  >
+
+                    <ListBox Name="historieTahuListBox"  Margin="-5,0,0,0"  FontWeight="Normal" BorderBrush="{x:Null}" FontFamily="Arial Narrow"  
+                         SelectionChanged="historieTahuListBox_SelectionChanged">
+                        <!--PreviewMouseDown="historieTahuListBox_PreviewMouseDown"  -->
+                    </ListBox>
+                </GroupBox>
+            </Grid>            
+            
+            <!--Toto je muj TOOLBAR s tlacitky v TOOLBAR TRAY-->
+            <ToolBarTray Name="podnosPaneluNastroju"  Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="35" 
+                     VerticalAlignment="Top" Background="#FFF0F0F0" Width="675">
+                <ToolBar Name="panelNastroju" Background="#FFF0F0F0" HorizontalAlignment="Left" 
+                     Height="35" Width="670">
+                    <Button Name="tlacitkoNovaHra" Height="35" Width="50" ToolTip="Nová hra" VerticalContentAlignment="Top" Click="tlacitkoNovaHra_Click" >
+                        <StackPanel>
+                            <Image Source="Ikonky/novaHra.ico" Height="28" Width="40"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Name="tlacitkoOtevrit" Height="35" Width="50" ToolTip="Otevřít uloženou hru" Click="tlacitkoOtevrit_Click">
+                        <StackPanel>
+                            <Image Source="Ikonky/open-file-icon.png" Height="28" Width="40"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Name="tlacitkoUlozit"  Height="35" Width="50" ToolTip="Uložit rozehranou hru" Click="tlacitkoUlozit_Click" >
+                        <StackPanel>
+                            <Image Source="Ikonky/Save-icon32.png" Height="28" Width="40"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Name="tlacitkoUlozitJako"  Height="35" Width="50" ToolTip="Uložit rozehranou hru" Click="tlacitkoUlozitJako_Click">
+                        <StackPanel>
+                            <Image Source="Ikonky/Save-as-icon32.png" Height="28" Width="40" ToolTip="Uložit rozehranou hru jako"  />
+                        </StackPanel>
+                    </Button>
+                    <Separator/>
+                    <Button Name="tlacitkoUndo" Height="35" Width="50" ToolTip="Tah zpět" VerticalContentAlignment="Center" Click="tlacitkoUndo_Click" >
+                        <StackPanel>
+                            <Image Source="Ikonky/undo.ico" Height="28" Width="40" />
+                        </StackPanel>
+                    </Button>
+                    <Button Name="tlacitkoRedo" Height="35" Width="50" ToolTip="Tah vpřed" VerticalContentAlignment="Center" Click="tlacitkoRedo_Click" >
+                        <StackPanel>
+                            <Image Source="Ikonky/redo.ico" Height="28" Width="40"/>
+                        </StackPanel>
+                    </Button>
+                    <Separator/>
+                    <Button Name="tlacitkoHraj" Height="35" Width="50" ToolTip="Pokračovat (výpočet tahu)" VerticalContentAlignment="Center" Click="tlacitkoHraj_Click" >
+                        <StackPanel>
+                            <Image Source="Ikonky/play.ico" Height="28" Width="40"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Name="tlacitoPause" Height="35" Width="50" ToolTip="Pauza (výpočet tahu)" VerticalContentAlignment="Center" Click="tlacitkoPause_Click" >
+                        <StackPanel>
+                            <Image Source="Ikonky/pause.ico" Height="28" Width="40"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Name="tlacitkoStopPartie" Height="35" Width="50" ToolTip="Ukončit rozehranou partii" VerticalContentAlignment="Center" Click="tlacitkoStopPartie_Click"  >
+                        <StackPanel>
+                            <Image Source="Ikonky/stop.ico" Height="28" Width="40"/>
+                        </StackPanel>
+                    </Button>
+                    <Separator/>
+                    <Button Name="tlacitkoNejlepsiTah" Height="35" Width="50" ToolTip="Nápověda nejlepšího tahu" VerticalContentAlignment="Center" Click="tlacitkoNejlepsiTah_Click" >
+                        <StackPanel>
+                            <Image Source="Ikonky/bulb.ico" Height="28" Width="40"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Name="tlacitkoNastaveni" Height="35" Width="50" ToolTip="Nastavení hráčů" 
+                        VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0.2" Click="tlacitkoNastaveni_Click" >
+                        <StackPanel>
+                            <Image Source="Ikonky/zmenabarev.ico" Height="28" Width="40"/>
+                        </StackPanel>
+                    </Button>
+                    <Separator/>                   
+                </ToolBar>
+            </ToolBarTray>
+
+            <!--Následuje 2x STATUS BAR v DockPanelu c1 a c2-->
+            <DockPanel Name="dockPanelc1" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3">
+                <StatusBar DockPanel.Dock="Bottom">
+                    <StatusBar.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="4.5"/>
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="4.5"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                        </ItemsPanelTemplate>
+                    </StatusBar.ItemsPanel>
+                    <StatusBarItem Grid.Column="0">
+                        <TextBlock Text="Na tahu je hráč číslo:"/>
+                    </StatusBarItem>
+                    <StatusBarItem Grid.Column="1">
+                        <TextBlock Name ="cisloHraceTextBlock"  Text="1"/>
+                    </StatusBarItem>
+                    <Separator Grid.Column="2"/>
+                    <StatusBarItem Grid.Column="3">
+                        <TextBlock Text="Počet tahů bez přeskoků:"/>
+                    </StatusBarItem>
+                    <StatusBarItem Grid.Column="4" HorizontalAlignment="Left">
+                        <TextBlock Name ="pocetTahuBPTextBlock" Text="0"/>
+                    </StatusBarItem>
+                    <Separator Grid.Column="5"/>
+                    <StatusBarItem Grid.Column="6">
+                        <TextBlock  Text="Výpočet tahu:"  VerticalAlignment="Bottom" />
+                    </StatusBarItem>
+                    <StatusBarItem Grid.Column="7" HorizontalAlignment="Left">
+                        <TextBlock Name ="vypocetTextBlock" Text=""/>
+                    </StatusBarItem>
+
+                    <StatusBarItem Grid.Column="8">
+                        <ProgressBar Name="mujProgressBar" Value="0" Width="225" Height="16"/>
+                    </StatusBarItem>
+                </StatusBar>
+            </DockPanel>
+            <DockPanel Name="dockPanelc2"  Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3">
+                <StatusBar DockPanel.Dock="Bottom">
+                    <StatusBar.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="53"/>
+                                    <ColumnDefinition Width="388"/>
+                                    <ColumnDefinition Width="4.5"/>
+                                    <ColumnDefinition Width="*"/>
+
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                        </ItemsPanelTemplate>
+                    </StatusBar.ItemsPanel>
+                    <StatusBarItem Grid.Column="0">
+                        <TextBlock Text="Hlášení:" VerticalAlignment="Center" FontWeight="Bold"/>
+                    </StatusBarItem>
+                    <StatusBarItem Grid.Column="1">
+                        <TextBlock Name ="hlaseniTextBlock" Text="{Binding NastavText}"
+                               HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                    </StatusBarItem>
+                    <Separator Grid.Column="2"/>
+                    <StatusBarItem Grid.Column="3">
+                        <TextBlock Name="druheHlaseniTextBlock" Text="{Binding NastavText}"
+                               HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold">
+                        </TextBlock>
+                    </StatusBarItem>
+                </StatusBar>
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Window>
