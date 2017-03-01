@@ -11,6 +11,7 @@ namespace Bunny_GUI_1
         int[,] hraciDeska = new int[8, 8];
         DispecerHry dispecerHry;
 
+
         //Vlastnosti:
         public DispecerHry GetDispecerHry
         {
