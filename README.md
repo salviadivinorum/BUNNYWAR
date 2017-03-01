@@ -6,7 +6,7 @@ Autor aplikace: David Jaroš
 Zdrojový kód:
 -------------
 Otevírá se souborem BunnyWar.sln.
-Zdrojový kód aplikace je určen pro IDE Microsoft Visual Studio Community 2015, programovac jazyk Visual C#.
+Zdrojový kód aplikace je určen pro IDE Microsoft Visual Studio Community 2015, programovací jazyk Visual C#.
 
 Spuštění
 ---------
