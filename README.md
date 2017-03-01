@@ -17,7 +17,7 @@ Aplikace funguje ve 64bit i ve 32bit operačním systému
 Dokumentace:
 --------------
 Programátorská dokumentace k projektu přístupná z adresáře doc. 
-Obsahuje základní popis mého řešení, UML class diagram a UML use case diagram k projektu.
+Obsahuje popis mého řešení a UML class diagram k projektu.
 
 ------------
 David Jaroš
