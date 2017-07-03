@@ -1,12 +1,10 @@
 # BUNNYWAR
-Projekt s mou deskovou hrou Bunny War
-
-Autor aplikace: David Jaroš
+Projekt aplikace deskové hry Bunny War
 
 Zdrojový kód:
 -------------
 Otevírá se souborem BunnyWar.sln.
-Zdrojový kód aplikace je určen pro IDE Microsoft Visual Studio Community 2015, programovací jazyk Visual C#.
+Zdrojový kód aplikace napsán v IDE Microsoft Visual Studio Community 2015, programovací jazyk C#.
 
 Spuštění
 ---------
