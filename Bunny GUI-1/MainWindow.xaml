@@ -139,8 +139,7 @@
             <Rectangle Name="deliciLinka" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"  Width ="675" Height="1" 
               VerticalAlignment="Center" HorizontalAlignment="Center" Stroke="Gray">
             </Rectangle>
-            
-            <!-- hraci desku jsem si vyrobil jako mrizku 64x 50x50 DIP-->
+                        <!-- hraci desku jsem si vyrobil jako mrizku 64x 50x50 DIP-->
             <!-- do mrizky jsem umistil 64x muj UzivatelskyPrvekPolicko-->
             <Grid x:Name="MrizHraciPlocha" Grid.Column="1" Grid.Row="1"  Height="400" Width="400" 
               VerticalAlignment="Center" HorizontalAlignment="Center" >
