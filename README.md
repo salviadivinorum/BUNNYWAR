@@ -1,14 +1,15 @@
 # BUNNYWAR
-Projekt aplikace deskové hry Bunny War
+Board game Bunny war.
+Desktop game
 
-Zdrojový kód:
+Sorce code:
 -------------
-Otevírá se souborem BunnyWar.sln.
-Zdrojový kód aplikace napsán v IDE Microsoft Visual Studio Community 2015, programovací jazyk C#.
+Written in Visual Studio, C#, WPF
+Open by BunnyWar.sln.
 
-Spuštění
+Run
 ---------
-Hra je připravená ke spuštění samostatně i bez vývojového prostředí - spustit soubor BunnyWar.exe z adresáře bin.
+You can run the game directly from soulution from directory /bin/BunnyWar.exe
 Aplikace hry je vytvořena a odladěna na OS Microsoft Windows 8.1 s nainstalovaným .NET Framework 4.5.2
 Aplikace funguje ve 64bit i ve 32bit operačním systému
 
