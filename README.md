@@ -1,23 +1,20 @@
 # BUNNYWAR
 Board game Bunny war.
-Desktop game
+PC Desktop game
 
-Sorce code:
+Source code:
 -------------
 Written in Visual Studio, C#, WPF
-Open by BunnyWar.sln.
+Open in studio by BunnyWar.sln.
 
 Run
 ---------
-You can run the game directly from soulution from directory /bin/BunnyWar.exe
-Aplikace hry je vytvořena a odladěna na OS Microsoft Windows 8.1 s nainstalovaným .NET Framework 4.5.2
-Aplikace funguje ve 64bit i ve 32bit operačním systému
+You can run the game directly from solution from /bin/BunnyWar.exe
 
-Dokumentace:
+Documentation:
 --------------
-Programátorská dokumentace k projektu přístupná z adresáře doc. 
-Obsahuje popis mého řešení a UML class diagram k projektu.
+UML classes and help documentation located in int /doc 
 
 ------------
 David Jaroš
-květen 2016
+created 5/2016
