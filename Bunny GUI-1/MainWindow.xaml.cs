@@ -2250,22 +2250,22 @@ namespace Bunny_GUI_1
         // Zakladni F1 help aplikace + osetreni vsech stavu co me napadly
         private void menuHelp_Click(object sender, RoutedEventArgs e)
         {
-            if (!File.Exists(System.IO.Path.Combine(System.Windows.Forms.Application.StartupPath, "Bunnyhelp.chm")))
+            var helpFile = System.IO.Path.Combine(System.Windows.Forms.Application.StartupPath, @"Help/Bunnyhelp.chm");
+
+			if (!File.Exists(helpFile))
             {
                 hlaseniTextBlock.Text = "Soubor nápovědy nebyl nalezen !";
                 return;
             }
             else
             {
-                string cesta;
-                cesta = System.IO.Path.Combine(System.Windows.Forms.Application.StartupPath, "Bunnyhelp.chm");
 
                 if (procesy.Count() == 0)
                 {  
                     try
                     {
                         ProcessStartInfo p = new ProcessStartInfo();
-                        p.FileName = cesta;
+                        p.FileName = helpFile;
                         p.WindowStyle = ProcessWindowStyle.Normal;                        
                         procesUkazCHMsoubor = Process.Start(p);                          
                         procesy.Add(procesUkazCHMsoubor);
